@@ -444,7 +444,7 @@ def readNerfiesCameras(path):
         camera['position'] = camera['position'] * coord_scale
         all_cam_params.append(camera)
 
-    all_img = [f'{path}/rgb/{int(1 / ratio)}x/{i}.png' for i in all_img]
+    all_img = [f'{path}/images/{int(1 / ratio)}x/{i}.png' for i in all_img]
 
     cam_infos = []
     for idx in range(len(all_img)):
@@ -485,7 +485,7 @@ def readNerfiesInfo(path, eval):
 
     nerf_normalization = getNerfppNorm(train_cam_infos)
 
-    ply_path = os.path.join(path, "points3d.ply")
+    ply_path = os.path.join(path, "points3D.ply")
     if not os.path.exists(ply_path):
         print(f"Generating point cloud from nerfies...")
 
