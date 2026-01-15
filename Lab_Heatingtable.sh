@@ -13,9 +13,6 @@ SCENE_LIST=(
 )
 TRAIN_ITERATIONS=20000 
 
-SCENE_LIST=(
-    Heatingtable
-)
 for SCENE in "${SCENE_LIST[@]}"; do
     echo -e "\n\033[32m[1/3] 开始训练rgb NeRF-DS/HyperNeRF...\033[0m"
     CUDA_VISIBLE_DEVICES=$GPU python train.py \

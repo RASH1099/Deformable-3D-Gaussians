@@ -1,15 +1,15 @@
 set -e  # 出错即停止，避免无效执行
 
 # ===================== 训练流程 =====================
-GPU=0
+GPU=1
 PORT_BASE=6001
-GT_PATH=/home/jiangzhenghan/project/Lab
+GT_PATH=/home/jiangzhenghan/project/MeetingRoom
 
-DATASET=Lab
+DATASET=MeetingRoom
 SAVE_PATH=output
 
 SCENE_LIST=(
-    HotPressMachine
+    DeliverIcePacks
 )
 TRAIN_ITERATIONS=20000 
 

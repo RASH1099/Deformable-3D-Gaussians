@@ -13,9 +13,6 @@ SCENE_LIST=(
 )
 TRAIN_ITERATIONS=20000 
 
-SCENE_LIST=(
-    Hotwind
-)
 for SCENE in "${SCENE_LIST[@]}"; do
     echo -e "\n\033[32m[1/3] 开始训练rgb NeRF-DS/HyperNeRF...\033[0m"
     CUDA_VISIBLE_DEVICES=$GPU python train.py \
@@ -28,7 +25,7 @@ for SCENE in "${SCENE_LIST[@]}"; do
     echo -e "\n\033[32m[2/3] 训练完成，开始渲染...\033[0m"
     CUDA_VISIBLE_DEVICES=$GPU python render.py \
     -m "${SAVE_PATH}/${DATASET}/${SCENE}_rgb_down2x" \
-    --mode render
+    --mode render --skip_train
 
     # ===================== 评估流程 =====================
     echo -e "\n\033[32m[3/3] 渲染完成，开始评估...\033[0m"
@@ -46,7 +43,7 @@ for SCENE in "${SCENE_LIST[@]}"; do
     echo -e "\n\033[32m[2/3] 训练完成，开始渲染...\033[0m"
     CUDA_VISIBLE_DEVICES=$GPU python render.py \
     -m "${SAVE_PATH}/${DATASET}/${SCENE}_thermal_down2x" \
-    --mode render   
+    --mode render --skip_train   
        # ===================== 评估流程 =====================
     echo -e "\n\033[32m[3/3] 渲染完成，开始评估...\033[0m"
     CUDA_VISIBLE_DEVICES=$GPU python metrics.py \
