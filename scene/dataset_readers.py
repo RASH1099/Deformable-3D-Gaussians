@@ -424,11 +424,32 @@ def readNerfiesCameras(path):
         all_img = train_img + val_img
         ratio = 0.5
     else:  # for hypernerf
-        train_img = dataset_json['ids'][::4]
-        all_img = train_img
+         
+        ids = dataset_json["ids"]
         ratio = 0.5
 
+        # 按帧号分组，确保 left/right 同帧不被拆开
+        def frame_key(_id: str) -> str:
+            return _id.split("_")[-1]  # 末尾 "0000" 作为帧key
+
+        frames = {}
+        for _id in ids:
+            k = frame_key(_id)
+            frames.setdefault(k, []).append(_id)
+
+        frame_list = sorted(frames.keys(), key=lambda x: int(x))
+
+        HOLDOUT = 8  # 每8帧抽1帧做test（你可改成6/10等，但固定即可复现）
+        test_frames = set(frame_list[::HOLDOUT])
+        train_frames = [f for f in frame_list if f not in test_frames]
+
+        train_img = [x for f in train_frames for x in frames[f]]
+        val_img   = [x for f in sorted(test_frames, key=lambda x: int(x)) for x in frames[f]]
+
+        all_img = train_img + val_img
+
     train_num = len(train_img)
+    assert train_num < len(all_img), f"Empty test split: train_num={train_num}, total={len(all_img)}"
 
     all_cam = [meta_json[i]['camera_id'] for i in all_img]
     all_time = [meta_json[i]['time_id'] for i in all_img]
