@@ -1,7 +1,7 @@
 set -e  # 出错即停止，避免无效执行
 
 # ===================== 训练流程 =====================
-GPU=1
+GPU=0
 PORT_BASE=6001
 GT_PATH=/home/jiangzhenghan/project/MeetingRoom
 
