@@ -9,9 +9,9 @@ DATASET=MeetingRoom
 SAVE_PATH=output
 
 SCENE_LIST=(
-    IroningClothes
+    vrig_IroningClothes
 )
-TRAIN_ITERATIONS=20000 
+TRAIN_ITERATIONS=30000 
 
 for SCENE in "${SCENE_LIST[@]}"; do
     echo -e "\n\033[32m[1/3] 开始训练rgb NeRF-DS/HyperNeRF...\033[0m"
